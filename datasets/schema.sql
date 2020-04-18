@@ -1,49 +1,62 @@
-﻿-- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
--- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
+﻿-- Base on the exported file from QuickDBD: https://www.quickdatabasediagrams.com/
 
+----------------------
+
+drop table if exists genre_anime;
+drop table if exists rating;
+drop table if exists genre;
+drop table if exists source_site;
+drop table if exists anime;
 
 CREATE TABLE "anime" (
-    "id" int   NOT NULL,
-    "title" varchar   NOT NULL,
-    "episodes" int   NOT NULL
+    "id" serial primary key,
+    "title" varchar,
+    "episodes" int
 );
 
-CREATE TABLE "source" (
-    "id" int   NOT NULL,
-    "source_name" varchar   NOT NULL
-);
 
-CREATE TABLE "rating" (
-    "id_anime" int   NOT NULL,
-    "id_source" int   NOT NULL,
-    "rating" int   NOT NULL
+CREATE TABLE "source_site" (
+    "id" serial primary key,
+    "source_name" varchar
 );
 
 CREATE TABLE "genre" (
-    "id" int   NOT NULL,
-    "genre_name" varchar   NOT NULL
+    "id" serial primary key,
+    "genre_name" varchar
+);
+
+CREATE TABLE "rating" (
+    "id" serial primary key,
+    "id_anime" int,
+    "id_source" int,
+    "rating" int,
+    FOREIGN KEY("id_anime")
+    REFERENCES "anime" ("id"),
+    FOREIGN KEY("id_source")
+    REFERENCES "source_site" ("id")
 );
 
 CREATE TABLE "genre_anime" (
-    "id_anime" int   NOT NULL,
-    "id_genre" int   NOT NULL
+    "id_anime" int,
+    "id_genre" int,
+    FOREIGN KEY("id_anime")
+    REFERENCES "anime" ("id"),
+    FOREIGN KEY("id_genre")
+    REFERENCES "genre" ("id")
 );
 
-ALTER TABLE "rating" ADD CONSTRAINT "fk_rating_id_anime" FOREIGN KEY("id_anime")
-REFERENCES "anime" ("id");
+insert into source_site (source_name)
+values ('Crunchyroll'),
+		('MyAnimeList');
+		
 
-ALTER TABLE "rating" ADD CONSTRAINT "fk_rating_id_source" FOREIGN KEY("id_source")
-REFERENCES "source" ("id");
-
-ALTER TABLE "genre_anime" ADD CONSTRAINT "fk_genre_anime_id_anime" FOREIGN KEY("id_anime")
-REFERENCES "anime" ("id");
-
-ALTER TABLE "genre_anime" ADD CONSTRAINT "fk_genre_anime_id_genre" FOREIGN KEY("id_genre")
-REFERENCES "genre" ("id");
-
-delete from anime;
-select * from anime;
-
-delete from genre;
-select * from genre;
-
+select 
+	a.title, 
+ 	ss.source_name, 
+	r.rating
+from anime a 
+left join rating r
+on a.id = r.id_anime
+left join source_site ss
+on r.id_source = ss.id
+where source_name = 'Crunchyroll';

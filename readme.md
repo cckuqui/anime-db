@@ -1,6 +1,6 @@
 # Anime Database - Combining Crunchyroll and MyAnimeList
 
-![ETL ilustration](https://latabernadelbi.files.wordpress.com/2018/07/etl-benefits.png)
+![Ilustration by MaggieHS](images/wallpaper_collage_anime_by_maggiehs_d7bwca5.jpg)
 
 ## Data
 
@@ -126,4 +126,4 @@ The crunchyroll database only contained one [csv file](datasets/crunchyroll.csv)
 
 ### Copyright
 
-First image not owned, retrived from La Taberna del BI on 14/07/2020.
+First image not owned, retrived from [DeviantArt](http://fav.me/d7bwca5).

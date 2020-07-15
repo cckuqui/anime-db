@@ -1,1 +1,3 @@
-password.py
+venv/
+.env
+.vscode/
